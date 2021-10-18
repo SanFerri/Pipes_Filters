@@ -8,6 +8,7 @@ namespace CompAndDel.Pipes
 {
     public class PipeSerial : IPipe
     {
+        protected IFilter save;
         protected IFilter filtro;
         protected IPipe nextPipe;
         
@@ -20,6 +21,7 @@ namespace CompAndDel.Pipes
         {
             this.nextPipe = nextPipe;
             this.filtro = filtro;
+            this.save = new FilterSavePicture();
         }
         /// <summary>
         /// Devuelve el proximo IPipe
@@ -42,6 +44,7 @@ namespace CompAndDel.Pipes
         public IPicture Send(IPicture picture)
         {
             picture = this.filtro.Filter(picture);
+            this.save.Filter(picture);
             return this.nextPipe.Send(picture);
         }
     }
