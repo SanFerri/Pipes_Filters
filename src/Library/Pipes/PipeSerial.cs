@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CompAndDel;
+using CognitiveCoreUCU;
+using CompAndDel.Filters;
 
 namespace CompAndDel.Pipes
 {
@@ -10,6 +12,7 @@ namespace CompAndDel.Pipes
     {
         protected IFilter save;
         protected IFilter filtro;
+        protected IFilter faceRecognition;
         protected IPipe nextPipe;
         
         /// <summary>
@@ -21,6 +24,8 @@ namespace CompAndDel.Pipes
         {
             this.nextPipe = nextPipe;
             this.filtro = filtro;
+            this.faceRecognition = new FilterFaceRecognition();
+            
             this.save = new FilterSavePicture();
         }
         /// <summary>
@@ -45,6 +50,7 @@ namespace CompAndDel.Pipes
         {
             picture = this.filtro.Filter(picture);
             this.save.Filter(picture);
+            this.faceRecognition.Filter(picture);
             return this.nextPipe.Send(picture);
         }
     }

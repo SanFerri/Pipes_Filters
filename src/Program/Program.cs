@@ -12,6 +12,7 @@ namespace CompAndDel
             PictureProvider provider = new PictureProvider();
             IPicture picture = provider.GetPicture(@"luke.jpg");
 
+
             IFilter greyFilter = new FilterGreyscale();
             IFilter negativeFilter = new FilterNegative();
 
@@ -21,11 +22,15 @@ namespace CompAndDel
             PipeSerial pipe1 = new PipeSerial(greyFilter, pipe2);
 
             picture = pipe1.Send(picture);
-            PictureProvider provider2 = new PictureProvider();
-            provider2.SavePicture(picture, @"luke1.jpg");
+            provider.SavePicture(picture, @"luke1.jpg");
 
+                
             var twitter = new TwitterImage();
-            Console.WriteLine(twitter.PublishToTwitter("text", @"PathToImage.png"));
+            Console.WriteLine(twitter.PublishToTwitter("Imagen previa al filtro", @"luke.jpg"));
+            for(int i = 0; i < FilterSavePicture.number; i++)
+            {
+                Console.WriteLine(twitter.PublishToTwitter($"Imagen del filtro N°{i + 1}", @$"../Program/Proceso/luke{i}.jpg"));
+            }
         }
     }
 }
