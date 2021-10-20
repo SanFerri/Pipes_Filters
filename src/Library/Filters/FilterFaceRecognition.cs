@@ -6,6 +6,7 @@ namespace CompAndDel.Filters
 {
     public class FilterFaceRecognition : IFilter
     {
+        public static bool face {get; set;}
 
         public IPicture Filter(IPicture image)
         {
@@ -18,6 +19,7 @@ namespace CompAndDel.Filters
         {
         if (cog.FaceFound)
         {
+            face = true;
             Console.WriteLine("Face Found!");
             if (cog.SmileFound)
             {
@@ -30,6 +32,7 @@ namespace CompAndDel.Filters
         }
         else
         {
+            face = false;
             Console.WriteLine("No Face Found");
         }
         }

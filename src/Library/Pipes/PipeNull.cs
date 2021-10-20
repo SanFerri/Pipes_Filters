@@ -9,7 +9,8 @@ namespace CompAndDel.Pipes
 {
     public class PipeNull : IPipe
     {
-        protected IFilter faceRecognition;
+        protected IFilter twitter = new FilterTwitter();
+        protected IFilter faceRecognition = new FilterFaceRecognition();
         IPicture image;
         /// <summary>
         /// Recibe una imagen, la guarda en una variable image y la retorna.
@@ -19,8 +20,8 @@ namespace CompAndDel.Pipes
         public IPicture Send(IPicture picture)
         {
             this.image = picture;
-            this.faceRecognition = new FilterFaceRecognition();
             this.faceRecognition.Filter(picture);
+            this.twitter.Filter(picture);
             return this.image;
         }
 
